@@ -1,7 +1,33 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:d="http://xamarin.com/schemas/2014/forms/design" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" x:Class="Hyperlist.MainPage">
-    <StackLayout>
-        <!-- Place new controls here -->
-        <Label Text="Welcome to Xamarin.Forms!" HorizontalOptions="Center" VerticalOptions="CenterAndExpand" />
-    </StackLayout>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:infiniteScrolling="clr-namespace:Hyperlist.Behaviors" mc:Ignorable="d"
+             x:Class="Hyperlist.MainPage">
+    <Grid BackgroundColor="BurlyWood">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <StackLayout Grid.Row="0" Orientation="Horizontal" HorizontalOptions="FillAndExpand" Padding="20, 0, 20, 0"
+                     IsVisible="{Binding IsLoadingItems}" HeightRequest="50" BackgroundColor="Chocolate">
+            <Label Text="Loading more shows..." TextColor="White" HorizontalOptions="StartAndExpand"
+                   VerticalOptions="Center" />
+            <ActivityIndicator IsRunning="True" Color="White" HorizontalOptions="EndAndExpand" />
+        </StackLayout>
+        
+            <CollectionView Grid.Row="1" ItemsSource="{Binding Shows}" ItemsUpdatingScrollMode="KeepItemsInView">
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout Orientation="Vertical" Span="4"/>
+                </CollectionView.ItemsLayout>
+                <!-- the behavior that will enable infinite scrolling -->
+                <CollectionView.Behaviors>
+                    <infiniteScrolling:InfiniteScrollBehavior IsLoadingMore="{Binding IsBusy}"/>
+                </CollectionView.Behaviors>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Image Source="{Binding Image.Medium}" Aspect="AspectFill" HeightRequest="100" />
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+    </Grid>
 </ContentPage>

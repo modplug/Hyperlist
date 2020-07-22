@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Hyperlist.ViewModels;
 using Xamarin.Forms;
 
 namespace Hyperlist
@@ -16,6 +13,9 @@ namespace Hyperlist
         public MainPage()
         {
             InitializeComponent();
+            var vm = new MainViewModel();
+            BindingContext = vm;
+            //vm.LoadNextPageCommand.Execute().Subscribe();
         }
     }
 }
